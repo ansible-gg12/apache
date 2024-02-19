@@ -1,0 +1,40 @@
+---
+- name: Apache web server configuration playbook
+  hosts: node1
+  become: true
+  tasks:  
+    - name: installing apached latest packages
+      dnf:
+        name: httpd 
+        state: latest
+        
+    - name: starting and enabling httpd services
+      service: 
+        name: httpd
+        state: started
+        enabled: true 
+        
+    - name: Setting up apache web server
+      template:
+        src: /home/ggupta/index.j2
+        dest: /var/www/html/index.html
+    
+    - name: Restarting apached httpd webservice
+      service: 
+        name: httpd
+        state: restarted
+        
+    - name: Allowing httpd service in firewall
+      firewalld: 
+        service: http
+        state: enabled
+        permanent: yes
+    
+    - name: Reload firewall servide
+      service:  
+        name: firewalld
+        state: reloaded
+...
+
+         
+

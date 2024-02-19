@@ -1,0 +1,7 @@
+---
+- name: starting and enabling httpd services
+  service:
+    name: httpd
+    state: started
+    enabled: true
+

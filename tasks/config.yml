@@ -1,0 +1,22 @@
+---
+- name: Setting up apache web server
+  template:
+    src: /home/ggupta/index.j2
+    dest: /var/www/html/index.html
+    
+- name: Restarting apached httpd webservice
+  service:
+    name: httpd
+    state: restarted
+    
+- name: Allowing httpd service in firewall
+  firewalld:
+    service: http
+    state: enabled
+    permanent: yes
+    
+- name: Reload firewall servide
+  service:
+    name: firewalld
+    state: reloaded
+...
